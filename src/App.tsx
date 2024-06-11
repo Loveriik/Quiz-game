@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+import WelcomePage from "./pages/WelcomePage";
+import DifficultyPage from "./pages/DifficultyPage";
+import QuizPage from "./pages/QuizPage";
+
+import { GameContext } from "./store/gameContext";
+import { useContext } from "react";
+import Wrapper from "./utility/Wrapper";
 
 function App() {
+  const ctx = useContext(GameContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Wrapper>
+      {!ctx.isGameChosen && <WelcomePage />}
+      {ctx.isGameChosen && !ctx.isDifficultyChosen && <DifficultyPage />}
+      {ctx.isGameChosen && ctx.isDifficultyChosen && <QuizPage />}
+    </Wrapper>
   );
 }
 

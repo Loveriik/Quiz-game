@@ -1,0 +1,35 @@
+:root {
+  --bg-option: #f9e5cd;
+  --color-h: #541d06;
+  --color-span: #9b7056;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.2);
+  background-color: var(--bg-option);
+  color: var(--color-h);
+
+  cursor: pointer;
+}
+
+.listItem h3 {
+  font-size: 22px;
+}
+
+.listItem span {
+  color: var(--color-span);
+}
+
+.listItem:hover {
+  scale: 1.02;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
