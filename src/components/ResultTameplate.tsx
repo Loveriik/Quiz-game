@@ -19,7 +19,7 @@ const ResultTameplate: React.FC<Props> = ({ item }) => {
       <p className={classes.question}>{item.question}</p>
       <p className={classes["answer-container"]}>
         <span className={classes.category}>Your answer:</span>
-        <p className={classes.answer}>{item.myAnswer}</p>
+        <span className={classes.answer}>{item.myAnswer}</span>
       </p>
       <p className={classes["answer-container"]}>
         <span className={classes.category}>Correct answer:</span>
