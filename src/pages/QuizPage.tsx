@@ -24,6 +24,10 @@ type ChosenAnswer = {
   isCorrect: boolean | undefined;
 };
 
+type FetchError = {
+  message: string;
+};
+
 const initialValue = [
   {
     correct_answer: "",
@@ -35,6 +39,8 @@ const initialValue = [
 const QuizPage: React.FC = () => {
   const ctx = useContext(GameContext);
 
+  const he = require("he");
+
   const [fetchedQuestions, setFetchedQuestions] =
     useState<Quiz[]>(initialValue);
 
@@ -42,6 +48,7 @@ const QuizPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [givingAnswers, setGivingAnswers] = useState<Answer[]>([]);
   const [gameIsFinished, setGameIsFinished] = useState<boolean>(false);
+  const [error, setError] = useState<FetchError | null>(null);
 
   const [chosenAnswer, setChosenAnswer] = useState<ChosenAnswer>({
     answer: undefined,
@@ -50,63 +57,75 @@ const QuizPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      let code;
-      const chosenCategory = ctx.chosenGame?.toLowerCase();
-      switch (chosenCategory) {
-        case GameCategory.History:
-          code = 23;
-          break;
-        case GameCategory.VideoGames:
-          code = 15;
-          break;
-        case GameCategory.Music:
-          code = 12;
-          break;
-        case GameCategory.Movies:
-          code = 11;
-          break;
-        case GameCategory.Art:
-          code = 25;
-          break;
-        case GameCategory.Celebrities:
-          code = 26;
-          break;
+        let code;
+        const chosenCategory = ctx.chosenGame?.toLowerCase();
+        switch (chosenCategory) {
+          case GameCategory.History:
+            code = 23;
+            break;
+          case GameCategory.VideoGames:
+            code = 15;
+            break;
+          case GameCategory.Music:
+            code = 12;
+            break;
+          case GameCategory.Movies:
+            code = 11;
+            break;
+          case GameCategory.Art:
+            code = 25;
+            break;
+          case GameCategory.Celebrities:
+            code = 26;
+            break;
+        }
+
+        const gameDifficulty = ctx.chosenDifficulty;
+
+        const query = `https://opentdb.com/api.php?amount=10&category=${code}&difficulty=${gameDifficulty}&type=multiple`;
+
+        const response = await fetch(query);
+
+        if (!response.ok) {
+          throw new Error(
+            "Network response was not ok " +
+              response.status +
+              ". Please, reload the page."
+          );
+        }
+
+        const data = await response.json();
+
+        const quizArray = data.results.map((item: any) => {
+          const optionsArray = item.incorrect_answers.map((item: any) => {
+            return he.decode(item);
+          });
+          optionsArray.push(item.correct_answer);
+          optionsArray.sort(() => Math.random() - 0.5);
+
+          let fixedQuestion = he.decode(item.question);
+
+          return {
+            correct_answer: item.correct_answer,
+            options: optionsArray,
+            question: fixedQuestion,
+          };
+        });
+
+        setFetchedQuestions(quizArray);
+        setIsLoading(false);
+      } catch (error) {
+        setError({
+          message: (error as Error).message,
+        });
       }
-
-      const gameDifficulty = ctx.chosenDifficulty;
-
-      const query = `https://opentdb.com/api.php?amount=10&category=${code}&difficulty=${gameDifficulty}&type=multiple`;
-
-      const response = await fetch(query);
-      const data = await response.json();
-
-      const quizArray = data.results.map((item: any) => {
-        const optionsArray = [...item.incorrect_answers];
-        optionsArray.push(item.correct_answer);
-        optionsArray.sort(() => Math.random() - 0.5);
-
-        let fixedQuestion = item.question.replaceAll("&quot;", '"');
-        fixedQuestion = fixedQuestion.replaceAll("&eacute;", "é");
-
-        return {
-          correct_answer: item.correct_answer,
-          options: optionsArray,
-          question: fixedQuestion,
-        };
-      });
-
-      setFetchedQuestions(quizArray);
-      setIsLoading(false);
     };
 
-    try {
-      fetchData();
-    } catch (e) {
-      throw new Error("Something went wrong! Try again");
-    }
-  }, [ctx.chosenDifficulty, ctx.chosenGame]);
+    fetchData();
+  }, [ctx.chosenDifficulty, ctx.chosenGame, he]);
 
   const answerHandler = (answer: string, question: string) => {
     setChosenAnswer((prev) => {
@@ -167,7 +186,9 @@ const QuizPage: React.FC = () => {
     <>
       {gameIsFinished && <Results result={givingAnswers} />}
 
-      {isLoading && <div className={classes.spinner}></div>}
+      {isLoading && !error && <div className={classes.spinner}></div>}
+
+      {error && <div className={classes.error}>{error.message}</div>}
 
       {!gameIsFinished && !isLoading && (
         <div>
@@ -187,29 +208,35 @@ const QuizPage: React.FC = () => {
           </div>
 
           <ul className={classes.list}>
-            {fetchedQuestions[currIndex].options.map((item: any, index) => {
-              return (
-                <li
-                  className={`${
-                    chosenAnswer.answer === item && classes.chosen
-                  } ${
-                    chosenAnswer.answer === item
-                      ? chosenAnswer.isCorrect
-                        ? classes.correct
-                        : classes.incorrect
-                      : null
-                  }`}
-                  key={index}
-                  onClick={answerHandler.bind(
-                    null,
-                    item,
-                    fetchedQuestions[currIndex].question
-                  )}
-                >
-                  {item}
-                </li>
-              );
-            })}
+            {fetchedQuestions[currIndex].options.map(
+              (answer: string, index) => {
+                return (
+                  <li
+                    style={{
+                      pointerEvents:
+                        chosenAnswer.answer !== undefined ? "none" : "auto",
+                    }}
+                    className={`${
+                      chosenAnswer.answer === answer && classes.chosen
+                    } ${
+                      chosenAnswer.answer === answer
+                        ? chosenAnswer.isCorrect
+                          ? classes.correct
+                          : classes.incorrect
+                        : null
+                    }`}
+                    key={index}
+                    onClick={answerHandler.bind(
+                      null,
+                      answer,
+                      fetchedQuestions[currIndex].question
+                    )}
+                  >
+                    {answer}
+                  </li>
+                );
+              }
+            )}
           </ul>
         </div>
       )}

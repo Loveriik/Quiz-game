@@ -85,7 +85,7 @@
 
   cursor: pointer;
 
-  transition: transform 0.5s ease-in, background-color 0.7s ease-in-out 0.7s;
+  transition: transform 0.5s ease-in, background-color 0.3s ease-in-out 0.7s;
 }
 
 .list li.correct {
@@ -100,7 +100,7 @@
 
 .chosen {
   scale: 1.02;
-  transform: translateY(-7px);
+  transform: translateY(-5px);
 }
 
 .list li:hover {
@@ -124,6 +124,16 @@
   font-size: 14px;
 
   background-color: var(--bg-option);
+}
+
+.error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+  font-size: 18px;
 }
 
 @media screen and (max-width: 460px) {

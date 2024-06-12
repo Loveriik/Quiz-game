@@ -23,7 +23,7 @@ const ResultTameplate: React.FC<Props> = ({ item }) => {
       </p>
       <p className={classes["answer-container"]}>
         <span className={classes.category}>Correct answer:</span>
-        <p className={classes.answer}>{item.correctAnswer}</p>
+        <span className={classes.answer}>{item.correctAnswer}</span>
       </p>
     </li>
   );
