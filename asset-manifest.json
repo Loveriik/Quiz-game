@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Quiz-game/static/css/main.9f26bc2d.css",
-    "main.js": "/Quiz-game/static/js/main.68aaf9f3.js",
+    "main.css": "/Quiz-game/static/css/main.16049e2f.css",
+    "main.js": "/Quiz-game/static/js/main.bf53c67f.js",
     "static/media/art.png": "/Quiz-game/static/media/art.39d4d67afdb4fa579d77.png",
     "static/media/movies.png": "/Quiz-game/static/media/movies.82db7314bd923e553865.png",
     "static/media/celebrities.png": "/Quiz-game/static/media/celebrities.ece61a51d4b5c3a01d7e.png",
@@ -9,11 +9,11 @@
     "static/media/games.png": "/Quiz-game/static/media/games.4fd15a25884b3358f4c3.png",
     "static/media/music.png": "/Quiz-game/static/media/music.b6f368f85a487d3fe61d.png",
     "index.html": "/Quiz-game/index.html",
-    "main.9f26bc2d.css.map": "/Quiz-game/static/css/main.9f26bc2d.css.map",
-    "main.68aaf9f3.js.map": "/Quiz-game/static/js/main.68aaf9f3.js.map"
+    "main.16049e2f.css.map": "/Quiz-game/static/css/main.16049e2f.css.map",
+    "main.bf53c67f.js.map": "/Quiz-game/static/js/main.bf53c67f.js.map"
   },
   "entrypoints": [
-    "static/css/main.9f26bc2d.css",
-    "static/js/main.68aaf9f3.js"
+    "static/css/main.16049e2f.css",
+    "static/js/main.bf53c67f.js"
   ]
 }
