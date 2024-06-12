@@ -14,6 +14,7 @@
   --color-h: #541d06;
   --color-span: #9b7056;
   --color-correct: #2e9a6d;
+  --color-incorrect: #f44336;
   --color-option: #ec8944;
 }
 
@@ -82,6 +83,22 @@
   font-size: 20px;
 
   cursor: pointer;
+
+  transition: 0.7s background-color ease-in-out;
+}
+
+.list li.correct {
+  background-color: var(--color-correct);
+  color: #fffafa;
+}
+
+.list li.incorrect {
+  background-color: var(--color-incorrect);
+  color: #f8f8f8;
+}
+
+.chosen {
+  scale: 1.02;
 }
 
 .list li:hover {

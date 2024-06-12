@@ -19,6 +19,11 @@ interface Answer {
   correctAnswer: string;
 }
 
+type ChosenAnswer = {
+  answer: string | undefined;
+  isCorrect: boolean | undefined;
+};
+
 const initialValue = [
   {
     correct_answer: "",
@@ -37,6 +42,11 @@ const QuizPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [givingAnswers, setGivingAnswers] = useState<Answer[]>([]);
   const [gameIsFinished, setGameIsFinished] = useState<boolean>(false);
+
+  const [chosenAnswer, setChosenAnswer] = useState<ChosenAnswer>({
+    answer: undefined,
+    isCorrect: undefined,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,36 +109,23 @@ const QuizPage: React.FC = () => {
   }, [ctx.chosenDifficulty, ctx.chosenGame]);
 
   const answerHandler = (answer: string, question: string) => {
-    // setTimeout(() => {
-    //   if (fetchedQuestions[currIndex].correct_answer === answer) {
-    //     setGivingAnswers((prevState) => [
-    //       ...prevState,
-    //       {
-    //         question,
-    //         result: true,
-    //         myAnswer: answer,
-    //         correctAnswer: fetchedQuestions[currIndex].correct_answer,
-    //       },
-    //     ]);
-    //   } else {
-    //     setGivingAnswers((prevState) => [
-    //       ...prevState,
-    //       {
-    //         question,
-    //         result: false,
-    //         myAnswer: answer,
-    //         correctAnswer: fetchedQuestions[currIndex].correct_answer,
-    //       },
-    //     ]);
-    //   }
+    setChosenAnswer((prev) => {
+      return {
+        ...prev,
+        answer,
+      };
+    });
 
-    //   if (currIndex < fetchedQuestions.length - 1) {
-    //     setCurrIndex((prev) => prev + 1);
-    //   } else {
-    //     setGameIsFinished(true);
-    //   }
-    // }, 2000);
-    if (fetchedQuestions[currIndex].correct_answer === answer) {
+    const correct = fetchedQuestions[currIndex].correct_answer === answer;
+
+    setChosenAnswer((prev) => {
+      return {
+        ...prev,
+        isCorrect: correct,
+      };
+    });
+
+    if (correct) {
       setGivingAnswers((prevState) => [
         ...prevState,
         {
@@ -150,11 +147,20 @@ const QuizPage: React.FC = () => {
       ]);
     }
 
-    if (currIndex < fetchedQuestions.length - 1) {
-      setCurrIndex((prev) => prev + 1);
-    } else {
-      setGameIsFinished(true);
-    }
+    setTimeout(() => {
+      setChosenAnswer(() => {
+        return {
+          answer: undefined,
+          isCorrect: undefined,
+        };
+      });
+
+      if (currIndex < fetchedQuestions.length - 1) {
+        setCurrIndex((prev) => prev + 1);
+      } else {
+        setGameIsFinished(true);
+      }
+    }, 3000);
   };
 
   return (
@@ -184,6 +190,15 @@ const QuizPage: React.FC = () => {
             {fetchedQuestions[currIndex].options.map((item: any, index) => {
               return (
                 <li
+                  className={`${
+                    chosenAnswer.answer === item && classes.chosen
+                  } ${
+                    chosenAnswer.answer === item
+                      ? chosenAnswer.isCorrect
+                        ? classes.correct
+                        : classes.incorrect
+                      : null
+                  }`}
                   key={index}
                   onClick={answerHandler.bind(
                     null,
