@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/quiz/static/css/main.b5d44c34.css",
+    "main.js": "/quiz/static/js/main.05ce70ab.js",
+    "static/media/art.png": "/quiz/static/media/art.39d4d67afdb4fa579d77.png",
+    "static/media/movies.png": "/quiz/static/media/movies.82db7314bd923e553865.png",
+    "static/media/celebrities.png": "/quiz/static/media/celebrities.ece61a51d4b5c3a01d7e.png",
+    "static/media/history.png": "/quiz/static/media/history.a5b21def5b6ed756ff73.png",
+    "static/media/games.png": "/quiz/static/media/games.4fd15a25884b3358f4c3.png",
+    "static/media/music.png": "/quiz/static/media/music.b6f368f85a487d3fe61d.png",
+    "index.html": "/quiz/index.html",
+    "main.b5d44c34.css.map": "/quiz/static/css/main.b5d44c34.css.map",
+    "main.05ce70ab.js.map": "/quiz/static/js/main.05ce70ab.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b5d44c34.css",
+    "static/js/main.05ce70ab.js"
+  ]
+}
