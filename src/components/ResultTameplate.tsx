@@ -1,5 +1,7 @@
 import classes from "./ResultTameplate.module.css";
 
+import { delay, motion } from "framer-motion";
+
 interface Props {
   item: {
     question: string;
@@ -7,11 +9,32 @@ interface Props {
     myAnswer: string;
     correctAnswer: string;
   };
+
+  ind: number;
 }
 
-const ResultTameplate: React.FC<Props> = ({ item }) => {
+const ResultTameplate: React.FC<Props> = ({ item, ind }) => {
+  const listVariant = {
+    visible: (i: number) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.2,
+      },
+    }),
+
+    hidden: {
+      y: -50,
+      opacity: 0,
+    },
+  };
+
   return (
-    <li
+    <motion.li
+      custom={ind}
+      initial={"hidden"}
+      animate={"visible"}
+      variants={listVariant}
       className={`${classes.listItem} ${
         item.result ? classes.correct : classes.wrong
       }`}
@@ -25,7 +48,7 @@ const ResultTameplate: React.FC<Props> = ({ item }) => {
         <span className={classes.category}>Correct answer:</span>
         <span className={classes.answer}>{item.correctAnswer}</span>
       </p>
-    </li>
+    </motion.li>
   );
 };
 

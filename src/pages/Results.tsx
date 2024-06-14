@@ -5,6 +5,8 @@ import ResultTameplate from "../components/ResultTameplate";
 import { GameContext } from "../store/gameContext";
 import { useContext } from "react";
 
+import { motion } from "framer-motion";
+
 interface Answer {
   result: {
     question: string;
@@ -37,13 +39,18 @@ const Results: React.FC<Answer> = ({ result }) => {
         <span>{finalScore}/10</span>
       </div>
 
-      <button className={classes.button} onClick={clearGameHandler}>
+      <motion.button
+        transition={{ duration: 0.4 }}
+        whileHover={{ scale: 1.04 }}
+        className={classes.button}
+        onClick={clearGameHandler}
+      >
         Go back to the menu
-      </button>
+      </motion.button>
 
       <ul className={classes.list}>
         {result.map((item, index) => {
-          return <ResultTameplate item={item} key={index} />;
+          return <ResultTameplate ind={index} item={item} key={index} />;
         })}
       </ul>
     </div>

@@ -5,6 +5,7 @@ import Results from "./Results";
 import { useEffect, useState, useContext } from "react";
 import { GameContext } from "../store/gameContext";
 import { GameCategory } from "../utility/utility";
+import { motion } from "framer-motion";
 
 interface Quiz {
   correct_answer: string;
@@ -179,7 +180,22 @@ const QuizPage: React.FC = () => {
       } else {
         setGameIsFinished(true);
       }
-    }, 3000);
+    }, 1000);
+  };
+
+  const listVariants = {
+    visible: (i: number) => ({
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.2,
+      },
+    }),
+
+    hidden: {
+      opacity: 0,
+      x: 60,
+    },
   };
 
   return (
@@ -211,7 +227,12 @@ const QuizPage: React.FC = () => {
             {fetchedQuestions[currIndex].options.map(
               (answer: string, index) => {
                 return (
-                  <li
+                  <motion.li
+                    variants={listVariants}
+                    initial={"hidden"}
+                    animate={"visible"}
+                    custom={index}
+                    whileHover={{ scale: 1.04 }}
                     style={{
                       pointerEvents:
                         chosenAnswer.answer !== undefined ? "none" : "auto",
@@ -225,7 +246,7 @@ const QuizPage: React.FC = () => {
                           : classes.incorrect
                         : null
                     }`}
-                    key={index}
+                    key={answer}
                     onClick={answerHandler.bind(
                       null,
                       answer,
@@ -233,7 +254,7 @@ const QuizPage: React.FC = () => {
                     )}
                   >
                     {answer}
-                  </li>
+                  </motion.li>
                 );
               }
             )}

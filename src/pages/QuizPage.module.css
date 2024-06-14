@@ -84,8 +84,6 @@
   outline: none;
 
   cursor: pointer;
-
-  transition: transform 0.5s ease-in, background-color 0.3s ease-in-out 0.7s;
 }
 
 .list li.correct {
@@ -98,14 +96,10 @@
   color: #f8f8f8;
 }
 
-.chosen {
-  scale: 1.02;
+/* .chosen {
+  scale: 1.04;
   transform: translateY(-5px);
-}
-
-.list li:hover {
-  scale: 1.02;
-}
+} */
 
 .button {
   display: block;
