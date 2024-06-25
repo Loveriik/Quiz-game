@@ -4,8 +4,8 @@ import { Actions } from "../utility/utility";
 interface MyContextType {
   isGameChosen: boolean;
   isDifficultyChosen: boolean;
-  chosenGame: string | undefined;
-  chosenDifficulty: string | undefined;
+  chosenGame?: string;
+  chosenDifficulty?: string;
   changeGameType: (arg: string) => void;
   changeDifficulty: (arg: string) => void;
   resetGame: () => void;
@@ -14,8 +14,8 @@ interface MyContextType {
 interface MyStateType {
   isGameChosen: boolean;
   isDifficultyChosen: boolean;
-  chosenGame: string | undefined;
-  chosenDifficulty: string | undefined;
+  chosenGame?: string;
+  chosenDifficulty?: string;
 }
 
 type Action =
@@ -45,7 +45,7 @@ const initialValue: MyStateType = {
 };
 
 const reducerFn = (state: MyStateType, action: Action): MyStateType => {
-  if (action.type === "game-type") {
+  if (action.type === Actions.GameType) {
     const newStatus = !state.isGameChosen;
     const gameName = action.payload;
 
@@ -56,7 +56,7 @@ const reducerFn = (state: MyStateType, action: Action): MyStateType => {
     };
   }
 
-  if (action.type === "game-difficulty") {
+  if (action.type === Actions.GameDifficulty) {
     const newDifficulty = !state.isDifficultyChosen;
     const difficulty = action.payload;
 
@@ -67,7 +67,7 @@ const reducerFn = (state: MyStateType, action: Action): MyStateType => {
     };
   }
 
-  if (action.type === "reset") {
+  if (action.type === Actions.Reset) {
     return initialValue;
   }
 

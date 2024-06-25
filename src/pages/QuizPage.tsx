@@ -21,8 +21,8 @@ interface Answer {
 }
 
 type ChosenAnswer = {
-  answer: string | undefined;
-  isCorrect: boolean | undefined;
+  answer?: string;
+  isCorrect?: boolean;
 };
 
 type FetchError = {
@@ -229,8 +229,8 @@ const QuizPage: React.FC = () => {
                 return (
                   <motion.li
                     variants={listVariants}
-                    initial={"hidden"}
-                    animate={"visible"}
+                    initial="hidden"
+                    animate="visible"
                     custom={index}
                     whileHover={{ scale: 1.04 }}
                     style={{

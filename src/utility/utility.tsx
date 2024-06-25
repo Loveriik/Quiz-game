@@ -52,3 +52,9 @@ export enum Actions {
   GameDifficulty = "game-difficulty",
   Reset = "reset",
 }
+
+export enum Difficulty {
+  Easy = "easy",
+  Medium = "medium",
+  Hard = "hard",
+}
