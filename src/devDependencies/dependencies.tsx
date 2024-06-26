@@ -75,3 +75,7 @@ export type Action =
 export interface MyComponentProps {
   children?: React.ReactNode;
 }
+
+export interface WrapperProps {
+  children?: React.ReactNode;
+}

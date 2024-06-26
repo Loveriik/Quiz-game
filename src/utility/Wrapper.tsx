@@ -1,10 +1,8 @@
 import classes from "./Wrapper.module.css";
 
-interface Props {
-  children?: React.ReactNode;
-}
+import { WrapperProps } from "../devDependencies/dependencies";
 
-const Wrapper: React.FC<Props> = ({ children }) => {
+const Wrapper: React.FC<WrapperProps> = ({ children }) => {
   return <div className={classes.container}>{children}</div>;
 };
 
