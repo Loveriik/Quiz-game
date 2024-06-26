@@ -2,16 +2,7 @@ import classes from "./ResultTameplate.module.css";
 
 import { delay, motion } from "framer-motion";
 
-interface Props {
-  item: {
-    question: string;
-    result: boolean;
-    myAnswer: string;
-    correctAnswer: string;
-  };
-
-  ind: number;
-}
+import { Props } from "../devDependencies/dependencies";
 
 const ResultTameplate: React.FC<Props> = ({ item, ind }) => {
   const listVariant = {

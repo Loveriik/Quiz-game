@@ -5,18 +5,11 @@ import ResultTameplate from "../components/ResultTameplate";
 import { GameContext } from "../store/gameContext";
 import { useContext } from "react";
 
+import { QuizAnswer } from "../devDependencies/dependencies";
+
 import { motion } from "framer-motion";
 
-interface Answer {
-  result: {
-    question: string;
-    result: boolean;
-    myAnswer: string;
-    correctAnswer: string;
-  }[];
-}
-
-const Results: React.FC<Answer> = ({ result }) => {
+const Results: React.FC<QuizAnswer> = ({ result }) => {
   const ctx = useContext(GameContext);
 
   const clearGameHandler = () => {

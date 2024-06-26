@@ -2,13 +2,7 @@ import classes from "./CategoryItem.module.css";
 import { useContext } from "react";
 import { GameContext } from "../store/gameContext";
 
-interface CategoryProps {
-  item: {
-    name: string;
-    src: string;
-    alt: string;
-  };
-}
+import { CategoryProps } from "../devDependencies/dependencies";
 
 const CategoryItem: React.FC<CategoryProps> = (props) => {
   const ctx = useContext(GameContext);

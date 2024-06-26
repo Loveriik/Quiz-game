@@ -1,31 +1,12 @@
 import { createContext, useReducer } from "react";
 import { Actions } from "../utility/utility";
 
-interface MyContextType {
-  isGameChosen: boolean;
-  isDifficultyChosen: boolean;
-  chosenGame?: string;
-  chosenDifficulty?: string;
-  changeGameType: (arg: string) => void;
-  changeDifficulty: (arg: string) => void;
-  resetGame: () => void;
-}
-
-interface MyStateType {
-  isGameChosen: boolean;
-  isDifficultyChosen: boolean;
-  chosenGame?: string;
-  chosenDifficulty?: string;
-}
-
-type Action =
-  | { type: Actions.GameType; payload: string }
-  | { type: Actions.GameDifficulty; payload: string }
-  | { type: Actions.Reset };
-
-interface MyComponentProps {
-  children?: React.ReactNode;
-}
+import {
+  MyContextType,
+  MyStateType,
+  Action,
+  MyComponentProps,
+} from "../devDependencies/dependencies";
 
 export const GameContext = createContext<MyContextType>({
   isGameChosen: false,

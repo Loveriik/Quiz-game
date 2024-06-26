@@ -7,27 +7,12 @@ import { GameContext } from "../store/gameContext";
 import { GameCategory } from "../utility/utility";
 import { motion } from "framer-motion";
 
-interface Quiz {
-  correct_answer: string;
-  options: string[];
-  question: string;
-}
-
-interface Answer {
-  question: string;
-  result: boolean;
-  myAnswer: string;
-  correctAnswer: string;
-}
-
-type ChosenAnswer = {
-  answer?: string;
-  isCorrect?: boolean;
-};
-
-type FetchError = {
-  message: string;
-};
+import {
+  Quiz,
+  Answer,
+  ChosenAnswer,
+  FetchError,
+} from "../devDependencies/dependencies";
 
 const initialValue = [
   {
